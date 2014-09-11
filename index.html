@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-    
+        <link type="text/css" rel="stylesheet" href="main.css" />
     </head>
     <body onkeydown="keyHandler(event)">
-    <canvas id="duk" style="width: 500px; height: 500px; border: 1px solid black;"></canvas>
+        
+    <canvas id="duk" style="width: 500px; height: 500px; border: 1px solid black; background-image:url(background.jpg)"></canvas>
+        <div id="score" style="position:fixed; top:180px;"></div>
         <script>
             var c = document.getElementById("duk");
             var ctx = c.getContext("2d");
@@ -12,10 +14,17 @@
             var xcube = 500;
             var xcube2 = 700;
             var xcube3 = 900;
+            var play = 1;
+            
+            // Ändrar färg, font och storlek på DIVen "score".
+            score.style.color = 'red';
+            score.style.fontFamily = 'Papyrus, fantasy';
+            score.style.fontSize = '49px';
             
             function DoodleJump(x, y) {
                 ctx.beginPath();
                 ctx.arc(x, y, 5, 0, 2*Math.PI);
+                ctx.fillStyle = 'green';
                 ctx.fill();
             }
             function cube1(x) {
@@ -35,9 +44,9 @@
             }
             
             function minus() {
-                xcube = xcube - 1;
-                xcube2 = xcube2 - 1;
-                xcube3 = xcube3 - 1;
+                xcube = xcube - 0.5;
+                xcube2 = xcube2 - 0.5;
+                xcube3 = xcube3 - 0.5;
             }
             
             function keyHandler(event) {
@@ -55,7 +64,7 @@
                 
                 DoodleJump(xDoodle, yDoodle);
                 
-                if(xcube > -601) {
+                if(xcube > -601 && play == 1) {
                     minus();
                 } else if(xcube < -600) {
                     xcube = 300;
@@ -63,11 +72,21 @@
                     xcube3 = 900;
                 }
                 // xcube1 översta
-                if(xDoodle == xcube && yDoodle > -1 && xDoodle == xcube && yDoodle < 55) {
-                    alert("kuk")
+                if(xDoodle == xcube && yDoodle < 55) {
+                    document.getElementById('score').innerHTML= "Too bad. Your score is: ";
+                    play = 0;
+                    
                 // xcube1 under
-                } else if(xDoodle == xcube && yDoodle < 161 && xDoodle == xcube && yDoodle > 95) {
-                    alert("kuk")
+                } else if(xDoodle == xcube && yDoodle > 95) {
+                    document.getElementById('score').innerHTML= "Too bad. Your score is: ";
+                    play = 0;
+                // xcube2 över
+                } else if(xDoodle == xcube2 && yDoodle < 135) {
+                    document.getElementById('score').innerHTML= "Too bad. Your score is: ";
+                    play = 0;
+                // xcube2 under
+                } else if(xDoodle == xcube2 > 95) {
+                    alert("kuk");
                 }
                 
                 cube1(xcube);
