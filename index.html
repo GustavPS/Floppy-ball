@@ -6,7 +6,8 @@
     <body onkeydown="keyHandler(event)">
         
     <canvas id="duk" style="width: 500px; height: 500px; border: 1px solid black; background-image:url(background.jpg)"></canvas>
-        <div id="score" style="position:fixed; top:180px;"></div>
+        <div id="score" style="position:fixed; top:200px; left: 30px;"></div>
+        <div id="ScoreBottom" style="position: fixed; top: 483px; left: 490px;"></div>
         <script>
             var c = document.getElementById("duk");
             var ctx = c.getContext("2d");
@@ -15,11 +16,16 @@
             var xcube2 = 700;
             var xcube3 = 900;
             var play = 1;
+            var point = 0;
             
-            // Ändrar färg, font och storlek på DIVen "score".
+            // Ändrar färg, font och storlek på DIVen "score" och DIVen "point".
             score.style.color = 'red';
             score.style.fontFamily = 'Papyrus, fantasy';
-            score.style.fontSize = '49px';
+            score.style.fontSize = '40px';
+            
+            ScoreBottom.style.color = 'red';
+            ScoreBottom.style.fontFamily = 'Papyrus, fantasy';
+            ScoreBottom.style.fontSize = '23px';
             
             function DoodleJump(x, y) {
                 ctx.beginPath();
@@ -40,7 +46,7 @@
             function cube3(x) {
                 ctx.beginPath();
                 ctx.fillRect(x, 0, 20, 30);
-                ctx.fillRect(x, 70, 20, 800);
+                ctx.fillRect(x, 70, 20, 80);
             }
             
             function minus() {
@@ -73,21 +79,33 @@
                 }
                 // xcube1 översta
                 if(xDoodle == xcube && yDoodle < 55) {
-                    document.getElementById('score').innerHTML= "Too bad. Your score is: ";
+                    document.getElementById('score').innerHTML= "Too bad. Your score is: " + point;
                     play = 0;
-                    
                 // xcube1 under
                 } else if(xDoodle == xcube && yDoodle > 95) {
-                    document.getElementById('score').innerHTML= "Too bad. Your score is: ";
+                    document.getElementById('score').innerHTML= "Too bad. Your score is: " + point;
                     play = 0;
                 // xcube2 över
-                } else if(xDoodle == xcube2 && yDoodle < 135) {
-                    document.getElementById('score').innerHTML= "Too bad. Your score is: ";
+                } else if(xDoodle == xcube2 && yDoodle < 85) {
+                    document.getElementById('score').innerHTML= "Too bad. Your score is: " + point;
                     play = 0;
                 // xcube2 under
-                } else if(xDoodle == xcube2 > 95) {
-                    alert("kuk");
+                } else if(xDoodle == xcube2 && yDoodle > 120) {
+                    document.getElementById('score').innerHTML= "Too bad. Your score is: " + point;
+                    play = 0;
+                // xcube3 över
+                } else if(xDoodle == xcube3 && yDoodle < 35) {
+                    document.getElementById('score').innerHTML= "Too bad. Your score is: " + point;
+                    play = 0;
+                // xcube3 under
+                } else if(xDoodle == xcube3 && yDoodle > 60) {
+                    document.getElementById('score').innerHTML= "Too bad. Your score is: " + point;
+                    play = 0;
+                } else if(xDoodle == xcube + 2 || xDoodle == xcube2 + 2 || xDoodle == xcube3 + 2) {
+                    point++;
                 }
+                // Visar poängen
+                document.getElementById('ScoreBottom').innerHTML= point;
                 
                 cube1(xcube);
                 cube2(xcube2);
