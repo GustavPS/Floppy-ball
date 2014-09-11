@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    
+    </head>
+    <body onkeydown="keyHandler(event)">
+    <canvas id="duk" style="width: 500px; height: 500px; border: 1px solid black;"></canvas>
+        <script>
+            var c = document.getElementById("duk");
+            var ctx = c.getContext("2d");
+            var key, xDoodle = 50, yDoodle = 20;
+            var xcube = 500;
+            var xcube2 = 700;
+            var xcube3 = 900;
+            
+            function DoodleJump(x, y) {
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2*Math.PI);
+                ctx.fill();
+            }
+            function cube1(x) {
+                ctx.beginPath();
+                ctx.fillRect(x, 0, 20, 50);
+                ctx.fillRect(x, 100, 20, 60);
+            }
+            function cube2(x) {
+                ctx.beginPath();
+                ctx.fillRect(x, 0, 20, 80);
+                ctx.fillRect(x, 120, 20, 30);
+            }
+            function cube3(x) {
+                ctx.beginPath();
+                ctx.fillRect(x, 0, 20, 30);
+                ctx.fillRect(x, 70, 20, 800);
+            }
+            
+            function minus() {
+                xcube = xcube - 1;
+                xcube2 = xcube2 - 1;
+                xcube3 = xcube3 - 1;
+            }
+            
+            function keyHandler(event) {
+                key = event.keyCode;
+                // W
+                if(key == 87) {
+                    yDoodle = yDoodle - 8;
+                // S
+                } else if(key == 83) {
+                    yDoodle = yDoodle + 8;
+                }
+            }
+            function repaint() {
+                ctx.clearRect(0, 0, 400, 700);
+                
+                DoodleJump(xDoodle, yDoodle);
+                
+                if(xcube > -601) {
+                    minus();
+                } else if(xcube < -600) {
+                    xcube = 300;
+                    xcube2 = 600;
+                    xcube3 = 900;
+                }
+                // xcube1 översta
+                if(xDoodle == xcube && yDoodle > -1 && xDoodle == xcube && yDoodle < 55) {
+                    alert("kuk")
+                // xcube1 under
+                } else if(xDoodle == xcube && yDoodle < 161 && xDoodle == xcube && yDoodle > 95) {
+                    alert("kuk")
+                }
+                
+                cube1(xcube);
+                cube2(xcube2);
+                cube3(xcube3);
+            }
+                  
+            window.setInterval(repaint, 1);
+            
+        </script>
+    
+    </body>
+</html>
