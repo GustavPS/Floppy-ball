@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link type="text/css" rel="stylesheet" href="main.css" />
     </head>
     <body onkeydown="keyHandler(event)" style="background-color:black;">
         <center>
     <canvas id="duk" style="width: 500px; height: 500px; border: 1px solid black; background-image:url(background.jpg)"></canvas>
         <div id="score" style="position:fixed; top:200px; left: 505px;"></div>
         <div id="ScoreBottom" style="position: fixed; top: 483px; left: 475px;"></div>
+        <div id="igen" style="position:fixed;"></div>
         <script>
             var c = document.getElementById("duk");
             var ctx = c.getContext("2d");
@@ -68,12 +68,17 @@
                 key = event.keyCode;
                 // W
                 if(key == 87 && play == 1) {
-                    yDoodle = yDoodle - 8;
+                    yDoodle = yDoodle - 7;
                 // S
                 } else if(key == 83 && play == 1) {
-                    yDoodle = yDoodle + 8;
+                    yDoodle = yDoodle + 20;
                 }
             }
+            
+            function timer() {
+                
+            }
+            
             function repaint() {
                 ctx.clearRect(0, 0, 400, 700);
                 
@@ -91,6 +96,7 @@
                 // xcube1 översta
                 if(xDoodle > xcube - 1 && yDoodle < 55 && xDoodle < xcube + 2 && yDoodle < 55) {
                     document.getElementById('score').innerHTML= "Too bad. Your score is: " + point;
+                    document.getElementById('igen').innerHTML = "<a onclick='click()'>Hej</a>";
                     play = 0;
                 // xcube1 under
                 } else if(xDoodle > xcube - 1 && yDoodle > 95 && xDoodle < xcube + 2 && yDoodle > 95) {
@@ -135,6 +141,10 @@
             }
                   
             window.setInterval(repaint, 1);
+            
+            function click(){
+            location.reload();
+            }
             
         </script>
         </center>
